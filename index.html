@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Blink : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Blink</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/breaklinkability/blink">View on GitHub</a>
+
+          <h1 id="project_title">Blink</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/breaklinkability/blink/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/breaklinkability/blink/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="welcome-to-the-blinks-github-page" class="anchor" href="#welcome-to-the-blinks-github-page"><span class="octicon octicon-link"></span></a>Welcome to the Blink's GitHub page!</h1>
+
+<p>Here you will find more details on Blink's implementation : its structure, its source code and a step-by-step guide to recreate a Blink's virtual machine from scratch. You will also find some additional information on the results of our experiment to assess how much impact Blink has on fingerprint diversity.</p>
+
+<h2>
+<a name="blink-in-a-nutshell" class="anchor" href="#blink-in-a-nutshell"><span class="octicon octicon-link"></span></a>Blink in a nutshell</h2>
+
+<p>Browser fingerprinting allows web sites and third-party companies to silently track users. The combination of uniqueness and stability of browser fingerprints make them ripe targets for exploitation. Furthermore, fingerprinting is complementary to other tracking techniques such as cookies. We introduce Blink, a moving target defense strategy against fingerprint-based user tracking. Each time a browsing session starts, Blink leverages virtualization and reconfiguration to automatically synthesize a random browsing environment (random operating system, with a random browser, and a random set of plugins and fonts). Blink automatically transfers user preferences (i.e., passwords, open tabs, bookmarks, selected plugins and fonts) from one environment to another to improve transparency and usability. This way, a user exhibits very diverse fingerprints over time without the risk of lying, but also keeps personal elements for a good browsing experience.</p>
+
+<h2>
+<a name="database-for-synthesizing-browsing-environment" class="anchor" href="#database-for-synthesizing-browsing-environment"><span class="octicon octicon-link"></span></a>Database for synthesizing browsing environment</h2>
+
+<h3>
+<a name="list-of-plugins" class="anchor" href="#list-of-plugins"><span class="octicon octicon-link"></span></a>List of plugins</h3>
+
+<ul>
+<li>LibreOffice Plug-in</li>
+<li>QuickTime Plug-in 7.6.6</li>
+<li>Java(TM) Plug-in 11.5.2</li>
+<li>Java(TM) Plug-in 10.55.2</li>
+<li>Java(TM) Plug-in 1.6.0_45</li>
+<li>IcedTea-Web Plugin</li>
+<li>Estonian ID card plugin</li>
+<li>NPAPI Plugins Wrapper 1.4.4</li>
+<li>iTunes Application Detector</li>
+<li>Gnome Shell Integration</li>
+<li>FreeWRL X3D/VRML</li>
+<li>Spice Firefox Plugin 2.8.90</li>
+<li>MozPlugger 1.14.3</li>
+<li>Shockwave Flash 12.1 r720 (libkpartsplugin.so)</li>
+<li>Shockwave Flash 11.1 r102 (libtotem-vegas-plugin.so)</li>
+<li>Shockwave Flash 11.2 r202 (libflashplayer.so)</li>
+<li>Shockwave Flash 10.1 r999 (libgnashplugin.so)</li>
+<li>KParts Plugin</li>
+<li>gxine starter plugin</li>
+<li>DjView-4.9</li>
+<li>X2GoClient Plug-in 4.0.2.0</li>
+<li>Google Talk Plugin Video Renderer</li>
+<li>Xine Plugin</li>
+<li>Google Talk Plugin</li>
+<li>VLC Web Plugin</li>
+<li>Skype Buttons for Kopete</li>
+<li>PackageKit</li>
+<li>Windows Media Player Plug-in</li>
+<li>mplayerplug-in is now gecko-mediaplayer 1.0.9</li>
+<li>RealPlayer 9</li>
+<li>DivX Browser Plug-In</li>
+<li>DivX® Web Player</li>
+<li>VLC Multimedia Plugin</li>
+<li>Windows Media Player Plug-in 10</li>
+<li>QuickTime Plug-in 7.6.9</li>
+</ul><h3>
+<a name="list-of-browsers" class="anchor" href="#list-of-browsers"><span class="octicon octicon-link"></span></a>List of browsers</h3>
+
+<ul>
+<li>Firefox 28.0 (stable)</li>
+<li>Firefox 29.0 (beta)</li>
+<li>Firefox 30.0 (aurora)</li>
+<li>Chrome 34 (stable)</li>
+<li>Chrome 35 (beta)</li>
+<li>Chrome 36 (unstable)</li>
+</ul><h3>
+<a name="list-of-os" class="anchor" href="#list-of-os"><span class="octicon octicon-link"></span></a>List of OS</h3>
+
+<ul>
+<li>Fedora 20 32 bits</li>
+<li>Fedora 20 64 bits</li>
+<li>Ubuntu 14.04 32 bits</li>
+<li>Ubuntu 14.04 64 bits</li>
+</ul><h3>
+<a name="list-of-fonts" class="anchor" href="#list-of-fonts"><span class="octicon octicon-link"></span></a>List of fonts</h3>
+
+<p>See database for the complete list of files.</p>
+
+<h2>
+<a name="implementation" class="anchor" href="#implementation"><span class="octicon octicon-link"></span></a>Implementation</h2>
+
+<h3>
+<a name="directories-structure" class="anchor" href="#directories-structure"><span class="octicon octicon-link"></span></a>Directories structure</h3>
+
+<p>There is two major parts in the structure of Blink.<br>
+The first is our own database of fonts, plugins and correctly configured browsers. When we build a new browsing environment, we randomly choose files from these directories.  This database was built according to fingerprints we gathered from our experiment. The bigger our database is, the more diverse and unique our created browsing environments will be.<br>
+The second part contains all of our configured VMs with the "Shared" folder that is being mounted automatically in the filesystem of each VM.<br>
+With this structure, it is easy to manipulate the files we need and have the perfect browsing environment that suits one needs.</p>
+
+<h3>
+<a name="source-code" class="anchor" href="#source-code"><span class="octicon octicon-link"></span></a>Source code</h3>
+
+<p>Clone, fork or download our source code in the Blink's repository <a href="https://github.com/breaklinkability/blink">HERE</a> (coming soon).</p>
+
+<h3>
+<a name="step-by-step-virtual-machine-creation" class="anchor" href="#step-by-step-virtual-machine-creation"><span class="octicon octicon-link"></span></a>Step-by-step virtual machine creation</h3>
+
+<p>Follow <a href="URL">this link</a> to get the entire story behind the creation of a Blink virtual machine.</p>
+
+<h2>
+<a name="additional-experiment-results" class="anchor" href="#additional-experiment-results"><span class="octicon octicon-link"></span></a>Additional experiment results</h2>
+
+<h3>
+<a name="benchmark" class="anchor" href="#benchmark"><span class="octicon octicon-link"></span></a>Benchmark</h3>
+
+<p>For our experiment, we measured the overhead imposed by the launch of a Blink's virtual machine. The captured time is the time needed between the event that launches the virtual machine and the moment when the browser is open and the browsing environment is fully operational. 
+You will find below a graph detailing the times we gathered from the environments synthesized from our 25 initial situations. The number of fonts and plugins grows for each new initial situations, thus leading to an average growing launch time.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Blink maintained by <a href="https://github.com/breaklinkability">breaklinkability</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
