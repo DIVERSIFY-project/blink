@@ -1,0 +1,26 @@
+{
+  "name": "ups",
+  "title": "User-Profile Sync",
+  "id": "jid1-d1BM58Kj2zuEUg",
+  "description": "Profile synchronisation extension for Blink",
+  "author": "Blink",
+  "license": "MPL 2.0",
+  "version": "0.6",
+  "preferences": [
+	
+	{
+		"name": "passwordStorage",
+        "title": "Enable passwords storage",
+        "description": "If this option is enabled, passwords will be stored in the data file. If encryption is disabled, passwords will be stored in plaintext.",
+        "type": "bool",
+		"value": false
+	},
+	{
+        "name": "passwordEncryption",
+        "title": "Enable passwords encryption",
+        "description": "If this option is enabled, the user will need to enter a Master Password to securely encrypt the complele data file.",
+        "type": "bool",
+        "value": false
+   	}
+  ]
+}
