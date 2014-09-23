@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Blink : " />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Blink : ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -34,12 +34,14 @@
         <h1>
 <a name="welcome-to-the-blinks-github-page" class="anchor" href="#welcome-to-the-blinks-github-page"><span class="octicon octicon-link"></span></a>Welcome to the Blink's GitHub page!</h1>
 
-<p>Here you will find more details on Blink's implementation: its structure, its source code and a step-by-step guide to recreate a Blink's virtual machine from scratch. You will also find some additional information on the results of our experiment to assess how much impact Blink has on fingerprint diversity.</p>
+<p>Here you will find more details on Blink, its source code and a step-by-step guide to recreate a Blink's virtual machine from scratch.</p>
 
 <h2>
 <a name="blink-in-a-nutshell" class="anchor" href="#blink-in-a-nutshell"><span class="octicon octicon-link"></span></a>Blink in a nutshell</h2>
 
-<p>Browser fingerprinting allows websites and third-party companies to track users silently. The combination of uniqueness and stability of browser fingerprints make them ripe targets for exploitation. Furthermore, fingerprinting is complementary to other tracking techniques such as cookies. We introduce Blink, a moving target defense strategy against fingerprint-based user tracking. Each time a browsing session starts, Blink leverages virtualization and reconfiguration to automatically synthesize a random browsing environment (random operating system, with a random browser, and a random set of plugins and fonts). Blink automatically transfers user preferences (i.e., passwords, open tabs, bookmarks, selected plugins and fonts) from one environment to another to improve transparency and usability. This way, a user exhibits very diverse fingerprints over time without the risk of lying, but also keeps personal elements for a good browsing experience.</p>
+<p>Browser fingerprinting allows websites and third-party companies to track users silently. The combination of uniqueness and stability of browser fingerprints make them ripe targets for exploitation. Furthermore, fingerprinting is complementary to other tracking techniques such as cookies. We introduce Blink, a moving target defense strategy against fingerprint-based user tracking. Each time a browsing session starts, Blink leverages virtualization and modular software architectures to automatically synthesize parts of a user’s platform that are the most distinguishable in a fingerprint, and modify them over time. We operate on the operating system, the browser, the lists of fonts and plugins. Blink automatically transfers user preferences (i.e., passwords, open tabs, bookmarks, selected plugins and fonts) from one environment to another to improve transparency and usability. This way, a user exhibits very diverse fingerprints over time without the risk of lying, but also keeps personal elements for a good browsing experience.</p>
+
+<p>You will find below a concept overview of Blink.</p>
 
 <p><img src="https://github.com/breaklinkability/blink/raw/gh-pages/images/overview.png" alt=""></p>
 
@@ -112,16 +114,6 @@
 <a name="implementation" class="anchor" href="#implementation"><span class="octicon octicon-link"></span></a>Implementation</h2>
 
 <h3>
-<a name="directories-structure" class="anchor" href="#directories-structure"><span class="octicon octicon-link"></span></a>Directories structure</h3>
-
-<p><img src="https://github.com/breaklinkability/blink/raw/gh-pages/images/dirtree.png" alt=""></p>
-
-<p>There are two major parts in the structure of Blink.<br>
-The first one is our own database of fonts, plugins and correctly configured browsers. When we build a new browsing environment, we randomly choose files from these directories.  This database was built according to fingerprints we gathered from our experiment. The bigger our database is, the more diverse and unique our created browsing environments will be.<br>
-The second part contains all of our configured VMs with the "Shared" folder that is being mounted automatically in the filesystem of each VM.<br>
-With this structure, it is easy to manipulate the files we need and have the perfect browsing environment that suits one needs.</p>
-
-<h3>
 <a name="source-code" class="anchor" href="#source-code"><span class="octicon octicon-link"></span></a>Source code</h3>
 
 <p>Clone, fork or download our source code in the Blink's repository <a href="https://github.com/breaklinkability/blink">HERE</a>.</p>
@@ -130,17 +122,6 @@ With this structure, it is easy to manipulate the files we need and have the per
 <a name="step-by-step-virtual-machine-creation" class="anchor" href="#step-by-step-virtual-machine-creation"><span class="octicon octicon-link"></span></a>Step-by-step virtual machine creation</h3>
 
 <p>Follow <a href="https://github.com/breaklinkability/blink/wiki">this link</a> to get the entire story behind the creation of a Blink virtual machine.</p>
-
-<h2>
-<a name="additional-experiment-results" class="anchor" href="#additional-experiment-results"><span class="octicon octicon-link"></span></a>Additional experiment results</h2>
-
-<h3>
-<a name="benchmark" class="anchor" href="#benchmark"><span class="octicon octicon-link"></span></a>Benchmark</h3>
-
-<p>For our experiment, we measured the overhead imposed by the launch of a Blink's virtual machine. The captured time is the time needed between the event that launches the virtual machine and the moment when the browser is open and the browsing environment is fully operational. 
-You will find below a graph detailing the times we gathered from the environments synthesized from our 25 initial situations. The number of fonts and plugins grows for each new initial situation, thus leading to an average growing launch time.</p>
-
-<p><img src="https://github.com/breaklinkability/blink/raw/gh-pages/images/boxplotLaunchTime.png" alt=""></p>
       </section>
     </div>
 
