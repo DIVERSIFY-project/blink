@@ -56,7 +56,7 @@ class Chrome(Browser):
             
     def runBrowser(self):
         chromePath = self.find("chrome","/media/sf_Shared/Browser/")
-        subprocess.call(chromePath+" --password-store=basic --no-sandbox --load-extension=/media/sf_Shared/Extensions/ups/ --no-default-browser-check --no-first-run",shell=True)
+        return subprocess.Popen(chromePath+" --password-store=basic --no-sandbox --load-extension=/media/sf_Shared/Extensions/ups/ --no-default-browser-check --no-first-run",shell=True)
     
         
     #################################  BOOKMARKS  #################################

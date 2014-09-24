@@ -18,4 +18,4 @@ class Firefox(Browser):
         return jsonExportData["passwordEncryption"]
             
     def runBrowser(self):
-        subprocess.call(["./Browser/firefox"])
+        return subprocess.Popen(["./Browser/firefox"])
