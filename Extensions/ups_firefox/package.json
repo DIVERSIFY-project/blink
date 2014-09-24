@@ -5,7 +5,7 @@
   "description": "Profile synchronisation extension for Blink",
   "author": "Blink",
   "license": "MPL 2.0",
-  "version": "0.6",
+  "version": "0.7",
   "preferences": [
 	
 	{

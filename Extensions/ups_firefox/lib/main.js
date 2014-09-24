@@ -1,5 +1,6 @@
 /*************** DECLARATIONS ***************/ 
 var {components, Cc, Ci, Cu} = require("chrome");
+Cu.import("resource://gre/modules/XPCOMUtils.jsm", this);
 
 var Application = Cc["@mozilla.org/fuel/application;1"].getService(Ci.fuelIApplication);
 Cu.import("resource://gre/modules/NetUtil.jsm");
@@ -14,7 +15,7 @@ var tabs = require("sdk/tabs");
 var prompts = Cc["@mozilla.org/embedcomp/prompt-service;1"]
 	.getService(Ci.nsIPromptService);
 
-var dataPath = "/media/sf_Shared/data.json";
+var dataPath = "/media/sf_Common/data.json";
 var passwordStorage = false;
 require("sdk/simple-prefs").prefs.passwordStorage = passwordStorage;
 var passwordEncryption = false;
@@ -22,17 +23,51 @@ require("sdk/simple-prefs").prefs.passwordEncryption = passwordEncryption;
 var exportJSONData = {"bookmarks": [],"openTabs": [], "passwords":[], "passwordStorage" : false, "passwordEncryption" : false, "browser":"Firefox"};
 var importJSONData;
 
-let actionOnShutdown = {
+let action = {
   observe : function(aSubject, aTopic, aData) {
-	 if (aTopic == "quit-application-requested") {
+	 if (aTopic == "passwordmgr-storage-changed") {
+		 writeJSONFile();
+	 } else if (aTopic == "quit-application-requested") {
 		 writeJSONFile();
 	 }
   }
 }
 
+//Defining observer for Firefox shutdown and password changes
 let observerService = Cc["@mozilla.org/observer-service;1"].
 	getService(Ci.nsIObserverService);
-	
+observerService.addObserver(action, "passwordmgr-storage-changed", false);
+observerService.addObserver(action, "quit-application-requested", false);
+
+//Defining observer for bookmark changes
+var bookmarkObserver = {
+  onItemAdded: function(aItemId, aFolder, aIndex) {
+    writeJSONFile();
+  },
+  onItemChanged: function(aItemId, aProperty, aIsAnnotationProperty, aNewValue, aLastModified, aItemType, aParentId, aGUID, aParentGUID) {
+    writeJSONFile();
+  },
+  onItemMoved: function(aItemId, aOldParentId, aOldIndex, aNewParentId, aNewIndex, aItemType, aGUID, aOldParentGUID, aNewParentGUID) {
+    writeJSONFile();
+  },
+  onItemRemoved: function(aItemId, aParentId, aIndex, aItemType, aURI, aGUID, aParentGUID) {
+    writeJSONFile();
+  },
+  QueryInterface: XPCOMUtils.generateQI([Ci.nsINavBookmarkObserver])
+};
+bookmarks.addObserver(bookmarkObserver, false); 
+ 
+//Defining observer for open tabs changes
+tabs.on('ready', function(tab) {
+  writeJSONFile();
+});
+tabs.on('close', function(tab) {
+  writeJSONFile();
+});
+
+//Defining observer for prefs changes
+require("sdk/simple-prefs").on("", writeJSONFile);
+
 
 /*************** PREFERENCES ***************/ 
 
@@ -225,6 +260,7 @@ function readFromFile(){
 }
 
 function writeJSONFile(){
+	 exportJSONData = {"bookmarks": [],"openTabs": [], "passwords":[], "passwordStorage" : passwordStorage, "passwordEncryption" : passwordEncryption, "browser":"Firefox"};
 	 exportPreferences();
 	 exportOpenTabsToJSON();
 	 exportBookmarksToJSON();
@@ -252,6 +288,6 @@ function readJSONFile(){
 }
 
 /*************** MAIN ***************/ 
-observerService.addObserver(actionOnShutdown, "quit-application-requested", false);
+
 clearBookmarksOnStartup();
 readJSONFile();
